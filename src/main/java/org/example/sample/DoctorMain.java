@@ -1,5 +1,6 @@
 package org.example.sample;
 
+import dao.AppointmentDAO;
 import dao.DoctorDAO;
 import model.Doctor;
 import model.Patient;
@@ -9,22 +10,19 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DoctorMain {
-    public static void main(String[] args) {
+    public static void manageDoctors(DoctorDAO doctorDAO, Scanner scanner) throws SQLException{
 
-        DoctorDAO doctorDao = new DoctorDAO();
-        Scanner scanner = new Scanner(System.in);
-
-
+        System.out.println("---DOCTORS MENU---");
         System.out.println("1. Create Doctor");
         System.out.println("2. Read Doctor");
         System.out.println("3. Update Doctor");
         System.out.println("4. Delete Doctor");
         System.out.println("5. Print Doctors");
-
+        System.out.println("6. Exit");
+        System.out.println("Enter a choice : ");
         int choice = scanner.nextInt();
         scanner.nextLine();
-
-        try {
+        while(choice != 6){
             switch (choice) {
                 case 1:
                     // Create Doctor
@@ -38,14 +36,14 @@ public class DoctorMain {
                     System.out.print("Enter email: ");
                     newDoctor.setEmail(scanner.nextLine());
 
-                    doctorDao.createDoctor(newDoctor);
+                    doctorDAO.createDoctor(newDoctor);
                     System.out.println("Doctor created successfully.");
                     break;
                 case 2:
                     // Read Doctor
                     System.out.print("Enter Doctor ID: ");
                     int doctorId = scanner.nextInt();
-                    Doctor doctor = doctorDao.getDoctorByID(doctorId);
+                    Doctor doctor = doctorDAO.getDoctorByID(doctorId);
                     if (doctor != null) {
                         System.out.println("Doctor ID: " + doctor.getDoctorId());
                         System.out.println("Name: " + doctor.getFirstName() + " " + doctor.getLastName());
@@ -60,7 +58,7 @@ public class DoctorMain {
                     System.out.print("Enter Doctor ID: ");
                     doctorId = scanner.nextInt();
                     scanner.nextLine();  // consume newline
-                    doctor = doctorDao.getDoctorByID(doctorId);
+                    doctor = doctorDAO.getDoctorByID(doctorId);
                     if (doctor != null) {
                         System.out.print("Enter new first name: ");
                         doctor.setFirstName(scanner.nextLine());
@@ -71,7 +69,7 @@ public class DoctorMain {
                         System.out.print("Enter new email: ");
                         doctor.setEmail(scanner.nextLine());
 
-                        doctorDao.updateDoctor(doctor);
+                        doctorDAO.updateDoctor(doctor);
                         System.out.println("Doctor updated successfully.");
                     } else {
                         System.out.println("Doctor not found.");
@@ -81,29 +79,28 @@ public class DoctorMain {
                     // Delete Doctor
                     System.out.print("Enter Doctor ID: ");
                     doctorId = scanner.nextInt();
-                    doctor = doctorDao.getDoctorByID(doctorId);
+                    doctor = doctorDAO.getDoctorByID(doctorId);
                     if(doctor != null) {
-                        doctorDao.deleteDoctor(doctorId);
+                        doctorDAO.deleteDoctor(doctorId);
                         System.out.println("Patient deleted successfully.");
                     }else {
                         System.out.println("Doctor not found.");
                     }
                     break;
-                    case 5:
-                        //Print all doctor details
-                        List<Doctor> doctors = doctorDao.getAllDoctors();
-                        for(Doctor doctorObj : doctors) {
-                            System.out.println(doctorObj);
-                        }
-                        break;
+                case 5:
+                    //Print all doctor details
+                    List<Doctor> doctors = doctorDAO.getAllDoctors();
+                    for(Doctor doctorObj : doctors) {
+                        System.out.println(doctorObj);
+                    }
+                    break;
                 default:
                     System.out.println("Invalid choice.");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Enter a choice : ");
+            choice = scanner.nextInt();
+            scanner.nextLine();
         }
-        finally {
-            scanner.close();
+
         }
-    }
-    }
+        }

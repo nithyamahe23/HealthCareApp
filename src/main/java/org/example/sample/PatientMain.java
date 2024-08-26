@@ -1,28 +1,27 @@
 package org.example.sample;
 
+import dao.DoctorDAO;
 import dao.PatientDAO;
 import model.Patient;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args) throws SQLException {
+public class PatientMain {
+    public static void managePatients(PatientDAO patientDAO, Scanner scanner) throws SQLException{
 
-
-        PatientDAO patientDAO = new PatientDAO();
-        Scanner scanner = new Scanner(System.in);
-
-
+        System.out.println(" --- PATIENTS MENU --- ");
         System.out.println("1. Create Patient");
         System.out.println("2. Read Patient");
         System.out.println("3. Update Patient");
         System.out.println("4. Delete Patient");
-
+        System.out.println("5. Print Patients");
+        System.out.println("6. Exit");
+        System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
         scanner.nextLine();
-
-        try {
+        while(choice != 6){
             switch (choice) {
                 case 1:
                     // Create Patient
@@ -85,15 +84,21 @@ public class Main {
                     patientDAO.deletePatient(patientId);
                     System.out.println("Patient deleted successfully.");
                     break;
+                case 5:
+                    //Display all patients
+                    List<Patient> patients = patientDAO.getAllPatients();
+                    for(Patient patientObj : patients)
+                    {
+                        System.out.println(patientObj);
+                    }
+
                 default:
                     System.out.println("Invalid choice.");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine();
         }
-        finally {
-            scanner.close();
+
         }
     }
-
-}
