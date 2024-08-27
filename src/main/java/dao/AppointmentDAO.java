@@ -64,7 +64,7 @@ public class AppointmentDAO {
             ps.setInt(2, appointment.getDoctorId());
             ps.setString(3, appointment.getAppointmentDate());
             ps.setString(4, appointment.getNotes());
-
+            ps.setInt(5, appointment.getAppointmentId());
             ps.executeUpdate();
         }
     }

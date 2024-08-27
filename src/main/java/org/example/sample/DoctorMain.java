@@ -12,13 +12,7 @@ import java.util.Scanner;
 public class DoctorMain {
     public static void manageDoctors(DoctorDAO doctorDAO, Scanner scanner) throws SQLException{
 
-        System.out.println("---DOCTORS MENU---");
-        System.out.println("1. Create Doctor");
-        System.out.println("2. Read Doctor");
-        System.out.println("3. Update Doctor");
-        System.out.println("4. Delete Doctor");
-        System.out.println("5. Print Doctors");
-        System.out.println("6. Exit");
+       loadDoctorsMenu();
         System.out.println("Enter a choice : ");
         int choice = scanner.nextInt();
         scanner.nextLine();
@@ -97,10 +91,22 @@ public class DoctorMain {
                 default:
                     System.out.println("Invalid choice.");
             }
+            loadDoctorsMenu();
             System.out.println("Enter a choice : ");
             choice = scanner.nextInt();
             scanner.nextLine();
         }
 
+        }
+
+        public static void loadDoctorsMenu()
+        {
+            System.out.println("---DOCTORS MENU---");
+            System.out.println("1. Create Doctor");
+            System.out.println("2. Read Doctor");
+            System.out.println("3. Update Doctor");
+            System.out.println("4. Delete Doctor");
+            System.out.println("5. Print Doctors");
+            System.out.println("6. Exit");
         }
         }

@@ -11,14 +11,7 @@ import java.util.Scanner;
 
 public class AppointmentMain {
     public static void manageAppointments(AppointmentDAO appointmentDAO, Scanner scanner) throws SQLException {
-
-        System.out.println("--- APPOINTMENTS MENU ---");
-        System.out.println("1. Create Appointment");
-        System.out.println("2. Read Appointment");
-        System.out.println("3. Update Appointment");
-        System.out.println("4. Delete Appointment");
-        System.out.println("5. Print Appointment");
-        System.out.println("6. Exit");
+        loadAppointmentsMenu();
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
         scanner.nextLine();
@@ -66,6 +59,7 @@ public class AppointmentMain {
                             appointment.setPatientId(scanner.nextInt());
                             System.out.print("Enter Doctor ID: ");
                             appointment.setDoctorId(scanner.nextInt());
+                            scanner.nextLine();
                             System.out.print("Enter Appointment Date: ");
                             appointment.setAppointmentDate(scanner.nextLine());
                             System.out.print("Enter Notes: ");
@@ -96,13 +90,25 @@ public class AppointmentMain {
                             System.out.println(appointmentObj);
                         }
                         break;
+
                     default:
                         System.out.println("Invalid choice.");
                 }
+            loadAppointmentsMenu();
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();
         }
+        }
+
+        public static void loadAppointmentsMenu(){
+            System.out.println("--- APPOINTMENTS MENU ---");
+            System.out.println("1. Create Appointment");
+            System.out.println("2. Read Appointment");
+            System.out.println("3. Update Appointment");
+            System.out.println("4. Delete Appointment");
+            System.out.println("5. Print Appointment");
+            System.out.println("6. Exit");
         }
 
 }
